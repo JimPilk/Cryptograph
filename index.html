@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+
+        <link rel="stylesheet" href="index.css" />
+        <title>Cryptopath</title>
+        <script src="levelData.js"></script>
+    </head>
+    <body>
+        <div id="title"></div>
+        <h1>Cryptopath</h1>
+        <p>
+            Today we will be cracking more than just cheese! Select a level
+            below to get started
+        </p>
+        <div id="tutorial">
+            <h2>Tutorial</h2>
+            <p>
+                Each cipher has a rough difficulty and in order to beat each
+                level, you must decode a piece of ciphertext from that level!
+                Feel free to do these in any order you want, and using any tools
+                you want from a pen and paper to a full programmed solution. I
+                recommend you research each cipher before attempting to crack it
+                (wikepedia is very useful for this), as the descriptions are
+                more a basic outline with some historical context and fun facts
+                mixed in
+            </p>
+        </div>
+        <h2>Levels</h2>
+        <div id="levelGrid"></div>
+        <div id="details">
+            <h2>Details</h2>
+            <p>
+                Ciphers come in many shapes and forms. Here are the main
+                catagories of cipher:
+            </p>
+            <h3>Substitution</h3>
+            <ul>
+                <li>Affine</li>
+                <li>Atbash</li>
+                <li>Caeser</li>
+                <li>ROT13</li>
+            </ul>
+            <h3>Transposition</h3>
+            <ul>
+                <li>Columnar Transposition</li>
+                <li>Rail Fence</li>
+            </ul>
+            <h3>Polybius Square</h3>
+            <ul>
+                <li>The Polybius Square</li>
+                <li>ADFGVX</li>
+                <li>Bifid</li>
+            </ul>
+            <h3>Polyalphabetic</h3>
+            <ul>
+                <li>Vigenere</li>
+                <li>Enigma</li>
+            </ul>
+        </div>
+        <div id="settings">
+            <h4>Settings</h4>
+            <button
+                type="button"
+                id="clearData"
+                onclick="
+                    localStorage.clear();
+                    alert(
+                        'Data has been cleared, all levels marked as unfinished',
+                    );
+                    window.location.reload();
+                "
+            >
+                Clear Data
+            </button>
+        </div>
+
+        <script src="index.js"></script>
+    </body>
+</html>

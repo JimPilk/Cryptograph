@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+
+        <link rel="stylesheet" href="level.css" />
+        <script src="levelData.js"></script>
+        <title id="title">Unknown Cipher</title>
+    </head>
+    <body>
+        <dialog id="successDialog">
+            <h2>🎉 Level Complete! 🎉</h2>
+            <p>Well done, you cracked this cipher...</p>
+            <button onclick="document.getElementById('successDialog').close()">
+                Return to Cipher
+            </button>
+            <button onclick="window.location.href = `index.html`">
+                Return to Menu
+            </button>
+        </dialog>
+
+        <div id="navigation">
+            <button type="button" onclick="window.location.href = `index.html`">
+                Return to Menu
+            </button>
+        </div>
+
+        <div id="introduction">
+            <h1 id="heading">Error! There is no cipher here...</h1>
+            <h2>Description</h2>
+            <p id="description">
+                Something bad happened if you are reading this, try going back
+                the home page/turning it off and back on again!
+            </p>
+        </div>
+
+        <div id="spec">
+            <h2>The Specifics</h2>
+
+            <p>Possible methods to crack the cipher:</p>
+            <table id="specTable">
+                <tr>
+                    <th>Method</th>
+                    <th>Suitability</th>
+                </tr>
+                <tr>
+                    <td>Pure Brain Power</td>
+                    <td id="brain">○○○○○</td>
+                </tr>
+                <tr>
+                    <td>Pen and Paper</td>
+                    <td id="paper">○○○○○</td>
+                </tr>
+                <tr>
+                    <td>Computational Methods</td>
+                    <td id="computer">○○○○○</td>
+                </tr>
+                <tr>
+                    <td>Online Solvers</td>
+                    <td id="online">○○○○○</td>
+                </tr>
+            </table>
+
+            <p>
+                This cipher will encrypt the following characters, and leave the
+                others untouched:
+            </p>
+            <h3 id="characterList">67</h3>
+
+            <p id="preserved" hidden>
+                All other characters will be ignored and then preserved in the
+                ciphertext
+            </p>
+            <p id="not preserved" hidden>
+                All other characters will be removed before encryption, and NOT
+                preserved in the ciphertext
+            </p>
+
+            <div hidden id="technicalities">
+                <h3>Technicalities</h3>
+                <ul id="technicalityList"></ul>
+            </div>
+        </div>
+
+        <div id="challenge">
+            <h2>Objective</h2>
+            <p>
+                Your mission, should you choose to accept it is to decode the
+                following message, that was encoded with the method described
+                above:
+            </p>
+            <h3 id="code" style="white-space: pre">
+                No challenge for an invalid cipher
+            </h3>
+            <button type="button" onclick="copyCode()">
+                Copy to clipboard
+            </button>
+        </div>
+
+        <div id="encrypting">
+            <h2>Encrypting</h2>
+            <p>
+                Feel free to try any sort of plain text you want to get a feel
+                for the encryption algorithm. If hacking into a real world
+                system, you might be able to input your own data into the system
+                and intercept the encrypted data a bit like this section! This
+                type of attack is called a chosen plaintext attack.
+            </p>
+            <p>
+                When you have your answer, type it into the box below to check
+                it
+            </p>
+
+            <form id="plaintextForm">
+                <label for="plaintext">Plain text:</label><br />
+                <textarea id="plaintext" rows="10" cols="30"></textarea>
+                <br />
+                <button id="encodebutton" type="button" onclick="encodeText()">
+                    Submit
+                </button>
+            </form>
+
+            <br />
+
+            <form id="ciphertextDisplay">
+                <label for="ciphertext">Cipher text:</label><br />
+                <textarea
+                    id="ciphertext"
+                    rows="10"
+                    cols="30"
+                    readonly="readonly"
+                ></textarea>
+            </form>
+        </div>
+
+        <div id="script">
+            <script src="level.js"></script>
+        </div>
+
+        <div id="nittygritty">
+            <h2>Frequently Requested Answers</h2>
+            <p>
+                In case of any confusion, here are some rules to make things
+                clearer about how these algorithms have been implemented and how
+                you should give your answer:
+            </p>
+            <ol>
+                <li>
+                    Type your answer in the plain text box to both encrypt and
+                    check it. If it is correct, an appropriate message will
+                    display. If it is incorrect nothing will happen and the
+                    plain text will simply be encrypted
+                </li>
+                <li>
+                    You may find a result that is not the correct answer but
+                    encrypts to the same ciphertext as the challenge given, but
+                    just like in the real world this will not count
+                </li>
+                <li>
+                    You do not need any specific punctuation or capitalisation
+                    in your answer, it only compares raw letters
+                </li>
+                <li>
+                    The implented encryption algorithm does not care for
+                    uppercase or lowercase letters, it may preserve them or just
+                    convert the plain text to upper case before encrypting
+                </li>
+                <li>
+                    Most of the algorithms implemented here will only encrypt
+                    alphabet characters, but will state all the characters that
+                    they can encrypt
+                </li>
+                <li>
+                    If an algorithm requires a key, the key will be the same for
+                    all users, but resets every day
+                </li>
+                <li>
+                    Two alternative versions of the same cipher will not
+                    necessarily share the same keys
+                </li>
+                <li>
+                    The objective has been encrypted with the exact same
+                    algorithm as the type in box
+                </li>
+            </ol>
+        </div>
+    </body>
+</html>

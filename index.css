@@ -1,0 +1,259 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap");
+
+/* ─── Variables ─────────────────────────────────────────── */
+:root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --border: #e4e1da;
+    --text: #1c1b18;
+    --text-muted: #6b6860;
+    --accent: #4a6741;
+    --accent-dim: #4a674118;
+    --mono: "IBM Plex Mono", monospace;
+    --serif: "Playfair Display", Georgia, serif;
+    --body: "Source Serif 4", Georgia, serif;
+    --radius: 6px;
+    --max-w: 860px;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 300;
+    line-height: 1.6;
+    padding-bottom: 3rem;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* ─── Typography ────────────────────────────────────────── */
+h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+}
+
+h2 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.6rem;
+}
+
+h3 {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+h4 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+p {
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    max-width: 62ch;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.75rem;
+}
+
+ul li {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding: 0.15rem 0;
+    padding-left: 0.9rem;
+    position: relative;
+}
+
+ul li::before {
+    content: "\2013";
+    position: absolute;
+    left: 0;
+    color: var(--border);
+}
+
+/* ─── Title / Hero ──────────────────────────────────────── */
+#title {
+    height: 3px;
+    background: var(--accent);
+    border-radius: 0 0 2px 2px;
+    width: 3rem;
+    margin-bottom: 2rem;
+    opacity: 0.6;
+}
+
+body > h1 {
+    margin-bottom: 0.3rem;
+}
+body > p {
+    margin-bottom: 1.75rem;
+}
+
+/* ─── Tutorial ──────────────────────────────────────────── */
+#tutorial {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+/* ─── Level Grid ────────────────────────────────────────── */
+body > h2 {
+    margin-bottom: 0.75rem;
+}
+
+#levelGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+}
+
+/* Difficulty headings injected by JS */
+#levelGrid h3 {
+    width: 100%;
+    margin-top: 0.6rem;
+    margin-bottom: 0.1rem;
+}
+
+#levelGrid h3:first-child {
+    margin-top: 0;
+}
+
+/* Level buttons – JS sets background-color inline for difficulty/completion.
+   We handle shape, text, and hover here. */
+#levelGrid button {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #1c1b18;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    transition:
+        filter 0.15s,
+        transform 0.1s;
+    /* Keep JS background-color but add a subtle inner shadow for depth */
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+}
+
+#levelGrid button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+#levelGrid button:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Details ───────────────────────────────────────────── */
+#details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    /* Lay out the cipher category columns */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 2rem;
+    row-gap: 0.1rem;
+}
+
+/* Span intro text and heading across both columns */
+#details > h2,
+#details > p {
+    grid-column: 1 / -1;
+}
+
+/* ─── Settings ──────────────────────────────────────────── */
+#settings {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#clearData {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #b94a4a;
+    background: transparent;
+    border: 1px solid #b94a4a;
+    border-radius: var(--radius);
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        color 0.15s;
+}
+
+#clearData:hover {
+    background: #b94a4a;
+    color: #fff;
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 520px) {
+    #details {
+        grid-template-columns: 1fr;
+    }
+
+    #levelGrid button {
+        font-size: 0.7rem;
+        padding: 0.5rem 0.75rem;
+    }
+}
