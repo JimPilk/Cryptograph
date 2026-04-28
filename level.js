@@ -164,5 +164,5 @@ if (cipherIndex != undefined) {
   var key = generateKey(cipherIndex);
   loadInfo(cipherIndex);
 } else {
-  window.location.href = "/";
+  window.location.href = "index.html";
 }
