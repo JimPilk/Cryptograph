@@ -1,3 +1,5 @@
+//30/04/2026
+
 const levels = [
   ["numerical", "atbash", "rot", "polybius"],
   ["caeser", "bacon", "scytale", "bifid"],
@@ -8,6 +10,7 @@ const levels = [
 const difficulties = ["Easy", "Medium", "Hard", "Very Hard"];
 const diffColours = ["#6aab5e", "#c9a96e", "#c45f5f", "#8b3a3a"];
 const completed = "#d4ae19";
+const completedToday = "#a020f0";
 
 const grid = document.getElementById("levelGrid");
 let currentDiff = null;
@@ -27,12 +30,13 @@ for (let i = 0; i < 4; i++) {
     cipherName = cipherHeadings[cipherIndex];
 
     const btn = document.createElement("button");
+    let icon = "";
     btn.textContent = cipherName;
-    if (data == null) {
-      btn.style.backgroundColor = diffColours[i];
-    } else {
-      btn.style.backgroundColor = completed;
+    btn.style.backgroundColor = diffColours[i];
+    if (data != null) {
+      btn.style.filter += "opacity(60%)";
     }
+
     btn.onclick = () =>
       (window.location.href = `level.html?cipher=${levels[i][j]}`);
     grid.appendChild(btn);
