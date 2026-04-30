@@ -8,6 +8,7 @@ function loadInfo(cipherIndex) {
   const title = document.getElementById("title");
   const heading = document.getElementById("heading");
   const description = document.getElementById("description");
+  const article = document.getElementById("wikepediaArticle");
   const challenge = document.getElementById("code");
   const characterList = document.getElementById("characterList");
   const specs = [
@@ -22,8 +23,15 @@ function loadInfo(cipherIndex) {
   heading.innerHTML = cipherHeadings[cipherIndex];
   description.innerHTML = cipherDescriptions[cipherIndex];
   challenge.innerHTML = showControlSymbols(
-    cipherFunctions[cipherIndex](cipherChallenges[cipherIndex], key),
+    cipherFunctions[cipherIndex](officialPlaintext, key),
   );
+
+  if (cipherWikedpediaArticles[cipherIndex] != undefined) {
+    article.href = cipherWikedpediaArticles[cipherIndex];
+    article.innerHTML = cipherHeadings[cipherIndex] + " Wikepedia Page";
+    article.hidden = false;
+    document.getElementById("articleIntroduction").hidden = false;
+  }
 
   let currentList = cipherCharacters[cipherIndex];
   characterList.innerHTML = currentList[0];
@@ -67,11 +75,13 @@ function loadInfo(cipherIndex) {
   }
 }
 
-function generateKey(cipherIndex) {
-  for (let i = cipherIndex; i > 0; i--) {
+function shuffleRandomiser(shuffleSeed) {
+  for (let i = shuffleSeed; i > 0; i--) {
     rand();
   }
+}
 
+function generateKey(cipherIndex) {
   cipherKeyFunction = cipherKeyFunctions[cipherIndex];
   if (cipherKeyFunction != undefined) {
     let key = cipherKeyFunction();
@@ -96,10 +106,7 @@ function encodeText() {
   const plaintext = document.getElementById("plaintext");
   const ciphertextDisplay = document.getElementById("ciphertext");
 
-  if (
-    cleanseAnswer(plaintext.value) ==
-    cleanseAnswer(cipherChallenges[cipherIndex])
-  ) {
+  if (cleanseAnswer(plaintext.value) == cleanseAnswer(officialPlaintext)) {
     levelComplete();
   }
 
@@ -114,10 +121,15 @@ function levelComplete(showDiaglog = true) {
   }
 
   let previousKey = localStorage.getItem("cipher" + cipherIndex);
-  document.getElementById("heading").innerHTML =
-    cipherHeadings[cipherIndex] +
-    " - Last solved on " +
-    getSeedlyDate(previousKey);
+  if (previousKey == getDailySeed()) {
+    document.getElementById("heading").innerHTML =
+      cipherHeadings[cipherIndex] + " - Solved for Today!";
+  } else {
+    document.getElementById("heading").innerHTML =
+      cipherHeadings[cipherIndex] +
+      " - Last solved on " +
+      getSeedlyDate(previousKey);
+  }
 
   const intro = document.getElementById("introduction");
   intro.classList.add("solved");
@@ -148,9 +160,7 @@ function copyToClipboard(text) {
 }
 
 function copyCode() {
-  copyToClipboard(
-    cipherFunctions[cipherIndex](cipherChallenges[cipherIndex], key),
-  );
+  copyToClipboard(cipherFunctions[cipherIndex](officialPlaintext, key));
 }
 
 //Silly code editor got confused in the html so I shoved it here :)
@@ -161,7 +171,9 @@ console.log("This cipher has cipher index", cipherIndex);
 
 if (cipherIndex != undefined) {
   var seed = getDailySeed();
+  shuffleRandomiser(cipherIndex ** 4);
   var key = generateKey(cipherIndex);
+  var officialPlaintext = generatePlaintext();
   loadInfo(cipherIndex);
 } else {
   window.location.href = "index.html";

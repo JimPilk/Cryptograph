@@ -32,6 +32,13 @@
                 Something bad happened if you are reading this, try going back
                 the home page/turning it off and back on again!
             </p>
+            <p id="articleIntroduction" hidden>
+                For more information on how this cipher works, see the
+                associated wikepedia article:
+            </p>
+            <a id="wikepediaArticle" target="_blank" hidden href="url"
+                >link text</a
+            >
         </div>
 
         <div id="spec">
@@ -171,8 +178,13 @@
                     they can encrypt
                 </li>
                 <li>
+                    The ciphertext you are trying to decode is the same for all
+                    users, but is procedurally generated each day, and is formed
+                    by concatenating random nouns and verbs and adjectives
+                </li>
+                <li>
                     If an algorithm requires a key, the key will be the same for
-                    all users, but resets every day
+                    all users, but resets every day like the ciphertext
                 </li>
                 <li>
                     Two alternative versions of the same cipher will not

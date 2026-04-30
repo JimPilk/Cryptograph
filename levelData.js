@@ -7,7 +7,8 @@ function mulberry32(seed) {
     seed = (seed + 0x6d2b79f5) | 0;
     var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    t = ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    return t;
   };
 }
 
@@ -32,6 +33,17 @@ function getSeedlyDate(seed) {
     year: "2-digit",
     timeZone: "UTC",
   });
+}
+function generatePlaintext() {
+  let plainText = "";
+  for (i = 0; i < plaintextParts.length; i++) {
+    if (i != 0) {
+      plainText += " ";
+    }
+    plainText += plaintextParts[i][Math.floor(rand() * plaintextParts.length)];
+  }
+  console.log("Plaintext: " + plainText);
+  return plainText;
 }
 
 const rand = mulberry32(getDailySeed());
@@ -165,7 +177,7 @@ function scytaleEncode(text, key) {
   return result;
 }
 function scytaleKey() {
-  return Math.floor(rand() * 9 + 2);
+  return Math.floor(rand() * 9 + 3);
 }
 
 function affineEncode(text, key) {
@@ -694,12 +706,12 @@ const cipherKeyFunctions = {
   8: substitutionKey,
   9: playfairKey,
   10: randomWord,
+  11: randomWord,
   12: randomWord,
   15: randomWord,
   16: adfgvxKey,
   17: fourSquareKey,
 };
-cipherKeyFunctions[11] = cipherKeyFunctions[10];
 
 const cipherTechnicalities = {
   0: [
@@ -732,26 +744,25 @@ const cipherTechnicalities = {
   ],
 };
 
-const cipherChallenges = {
-  0: "You just solved your first cipher!",
-  1: "Do geese see God? thats a palindrome like this cipher",
-  2: "J have replaced all the i wjth j to confuse your solver",
-  3: "Caeser snipped his sniffer, seized his knee and sneezed",
-  4: "Do you have a kevin bacon number?",
-  5: "This is madness... THIS IS SPARTA",
-  6: "This is such a fine cipher",
-  7: "This is about as secure as the actual fence keeping the neighbours out!",
-  8: "I wanted to make a ciphertext that had a perfect one to one correlation with frequency analysis to make it really easy to solve, but couldn't come up with one",
-  9: "Hi guys, Im John Kenedy whos lost becaus my PT boat sank please help",
-  10: "Not particularly uncrackable, reminds me of an egg!",
-  12: "Wow this thing is french or something!",
-  13: "Julius Caeser had two younger sisters, Major Julia and Minor Julia. Yes they were actually called that. This cipher is just like the true caeser ciphers little brother!",
-  14: "This wasn't hard at all, I've bi-fid-ling with ciphers like this for breakfast!",
-  15: "My love life is just like a cipher: complicated, encoded and missing the key! (I'm ciphering in silence)",
-  16: "dot dash pause dash dot dot pause dot dot dash dot pause dot dot dot dash pause dash dash dot pause dash dot dot dash end",
-  17: "This is getting too much, I'm polybius-ed out!",
-};
-cipherChallenges[11] = cipherChallenges[10];
+// const cipherChallenges = {
+//   0: "You just solved your first cipher!",
+//   1: "Do geese see God? thats a palindrome like this cipher",
+//   2: "J have replaced all the i wjth j to confuse your solver",
+//   3: "Caeser snipped his sniffer, seized his knee and sneezed",
+//   4: "Do you have a kevin bacon number?",
+//   5: "This is madness... THIS IS SPARTA",
+//   6: "This is such a fine cipher",
+//   7: "This is about as secure as the actual fence keeping the neighbours out!",
+//   8: "I wanted to make a ciphertext that had a perfect one to one correlation with frequency analysis to make it really easy to solve, but couldn't come up with one",
+//   9: "Hi guys, Im John Kenedy whos lost becaus my PT boat sank please help",
+//   10: "Not particularly uncrackable, reminds me of an egg!",
+//   12: "Wow this thing is french or something!",
+//   13: "Julius Caeser had two younger sisters, Major Julia and Minor Julia. Yes they were actually called that. This cipher is just like the true caeser ciphers little brother!",
+//   14: "This wasn't hard at all, I've bi-fid-ling with ciphers like this for breakfast!",
+//   15: "My love life is just like a cipher: complicated, encoded and missing the key! (I'm ciphering in silence)",
+//   16: "dot dash pause dash dot dot pause dot dot dash dot pause dot dot dot dash pause dash dash dot pause dash dot dot dash end",
+//   17: "This is getting too much, I'm polybius-ed out!",
+// };
 
 const cipherHeadings = {
   0: "The Numerical Cipher",
@@ -793,6 +804,24 @@ const cipherDetails = {
   15: [2, 2, 4, 4],
   16: [0, 1, 3, 4],
   17: [0, 1, 4, 3],
+};
+
+const cipherWikedpediaArticles = {
+  1: "https://en.wikipedia.org/wiki/Atbash",
+  8: "https://en.wikipedia.org/wiki/Substitution_cipher",
+  3: "https://en.wikipedia.org/wiki/Caesar_cipher",
+  12: "https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher",
+  13: "https://en.wikipedia.org/wiki/ROT13",
+  2: "https://en.wikipedia.org/wiki/Polybius_square",
+  16: "https://en.wikipedia.org/wiki/ADFGVX_cipher",
+  9: "https://en.wikipedia.org/wiki/Playfair_cipher",
+  17: "https://en.wikipedia.org/wiki/Four-square_cipher",
+  14: "https://en.wikipedia.org/wiki/Bifid_cipher",
+  6: "https://en.wikipedia.org/wiki/Affine_cipher",
+  15: "https://en.wikipedia.org/wiki/Transposition_cipher#Columnar_transposition",
+  7: "https://en.wikipedia.org/wiki/Rail_fence_cipher",
+  4: "https://en.wikipedia.org/wiki/Bacon%27s_cipher",
+  5: "https://en.wikipedia.org/wiki/Scytale",
 };
 
 //Presets
@@ -844,6 +873,208 @@ const cipherDescriptions = {
 };
 cipherDescriptions[11] = cipherDescriptions[10];
 
+const plaintextParts = [
+  // [0] Subjects
+  [
+    "The spy",
+    "The agent",
+    "A hacker",
+    "The analyst",
+    "The operative",
+    "A cryptographer",
+    "The interceptor",
+    "A double agent",
+    "The code breaker",
+    "The surveillance team",
+    "A field operative",
+    "The signals officer",
+    "A clandestine unit",
+    "The intelligence bureau",
+    "A rogue analyst",
+    "The cereal killer",
+    "A suspicious character",
+    "The key witness",
+    "A shady operator",
+    "The encrypted enemy",
+    "A scrambled informant",
+    "The shifty detective",
+    "A well-coded assassin",
+    "The substituted suspect",
+    "A transposed traitor",
+    "The Duck",
+    "Mr Lonsdale",
+  ],
+
+  // [1] Verbs
+  [
+    "intercepted",
+    "decoded",
+    "encrypted",
+    "discovered",
+    "transmitted",
+    "concealed",
+    "extracted",
+    "smuggled",
+    "compromised",
+    "uncovered",
+    "dispatched",
+    "monitored",
+    "relayed",
+    "forged",
+    "leaked",
+    "sabotaged",
+    "infiltrated",
+    "neutralised",
+    "evacuated",
+    "scrambled to find",
+    "shifted suspicion onto",
+    "had a key role in finding",
+    "cracked open",
+    "railroaded",
+    "wrapped around",
+    "zigzagged toward",
+    "substituted",
+    "rotated suspiciously near",
+    "left no trace of",
+    "devoured",
+    "muched upon",
+  ],
+
+  // [2] Objects
+  [
+    "a secret message",
+    "the transmission",
+    "a hidden signal",
+    "the launch codes",
+    "a classified document",
+    "an encrypted file",
+    "the stolen blueprints",
+    "a forged identity",
+    "the missing dossier",
+    "a covert frequency",
+    "the compromised network",
+    "a suspicious package",
+    "the leaked coordinates",
+    "a scrambled broadcast",
+    "the intercepted orders",
+    "a redacted report",
+    "the agent's cover story",
+    "a microfilm canister",
+    "the decoded telegram",
+    "a hidden cipher key",
+    "a very shifty briefcase",
+    "the keys to the kingdom",
+    "a grid of suspicious squares",
+    "a message wrapped around a stick",
+    "a fence with very suspicious rails",
+    "a grid of letters with no J",
+    "a suspiciously short alphabet",
+    "a backwards dictionary",
+    "a message nobody could quite place",
+    "a very square grid of secrets",
+    "the longest keyword in history",
+    "a zigzag of incriminating evidence",
+    "your mum",
+  ],
+
+  // [3] Locations
+  [
+    "at midnight",
+    "in the bunker",
+    "near the border",
+    "under the bridge",
+    "at the safe house",
+    "inside the embassy",
+    "along the coastline",
+    "in a darkened alleyway",
+    "aboard the submarine",
+    "at the dead drop",
+    "inside the clock tower",
+    "at the rendezvous point",
+    "near the airfield",
+    "in the server room",
+    "beneath the city streets",
+    "at the checkpoint",
+    "inside enemy territory",
+    "at the communications tower",
+    "in the war room",
+    "at the abandoned warehouse",
+    "on the wrong side of the fence",
+    "between the lines",
+    "somewhere nobody could decrypt",
+    "in a suspiciously diagonal direction",
+    "at an undisclosed grid reference",
+    "on rail three of five",
+    "in a grid with no obvious exit",
+    "exactly twenty six steps away",
+    "in a location only the key could reveal",
+    "behind a very suspicious substitution",
+    "outside your mums house",
+    "inside your mums house",
+  ],
+
+  // [4] Times
+  [
+    "before dawn",
+    "at the stroke of midnight",
+    "under the cover of darkness",
+    "during the third watch",
+    "as the clock struck thirteen",
+    "in the dead of winter",
+    "at the coldest hour",
+    "when the signal dropped",
+    "after the last transmission",
+    "before the connection was severed",
+    "during radio silence",
+    "as the sun set over the horizon",
+    "at the appointed hour",
+    "before the operation was compromised",
+    "when nobody was watching",
+    "after several suspicious shifts",
+    "when the key had been misplaced",
+    "before anyone could crack the code",
+    "after one too many rotations",
+    "while the rails were still up",
+    "before the alphabet ran out",
+    "when Z was nowhere to be found",
+    "after a suspiciously long keyword",
+    "while the grid was still warm",
+    "before frequency analysis ruined everything",
+    "sometime between 6 and 7 o'clock in the morning",
+    "sometime between 6 and 7 o'clock in the evening",
+  ],
+
+  // [5] Outcomes
+  [
+    "and was never seen again",
+    "leaving no trace behind",
+    "without raising a single alarm",
+    "before the agency could respond",
+    "with devastating consequences",
+    "changing the course of history",
+    "and vanished into the night",
+    "under the cover of static",
+    "before the signal was lost",
+    "and the operation was a success",
+    "without a single witness",
+    "and the truth was buried",
+    "alerting nobody",
+    "and the file was sealed forever",
+    "before the cipher was broken",
+    "and nobody could quite decode what happened next",
+    "leaving analysts scratching their heads and their pencils",
+    "which was frankly a lot of effort for a Caesar cipher",
+    "though frequency analysis would later reveal everything",
+    "which an Atbash cipher could have prevented, arguably",
+    "and the key was lost, probably under the sofa",
+    "much to the confusion of the rail fence enthusiasts present",
+    "in what historians now call a classic chosen plaintext blunder",
+    "proving once again that ROT13 applied twice solves nothing",
+    "and the substitution cipher took all the blame as usual",
+    "and has even our finest spies bamboozled",
+    "and has even our finest spies saying 'erm, what the sigma?'",
+  ],
+];
 const cipherKeyWords = [
   // Maths
   "algebra",
